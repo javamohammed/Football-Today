@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<th:block th:include="layouts/section-head.html"></th:block> 
+
+ <section class="ftco-section contact-section">
+      <div class="container">
+        <div class="row block-9">
+          <div class="col-md-6 order-md-last d-flex">
+            <form action="#" class="bg-light p-5 contact-form" th:action="@{/market/save}" th:object="${market}" method="post">
+            
+            <div class="form-group">
+            	<label for="from">From:</label>
+                <select class="custom-select" id="from" th:field="*{from}" required>
+                <option value="Choose"  selected>Choose...</option>
+                <option th:each="club : ${clubs}" 
+					          th:value="${club.id}" 
+					          th:text="${club.name}"/>
+			    </select>
+			    <span class="invalid-msg" th:if="${#fields.hasErrors('from')}" th:errors="*{from}"></span>
+              </div>
+              <div class="form-group">
+              	<label for="player">Player:</label>
+                <select class="custom-select" id="players" th:field="*{player}" required>
+			    </select>
+			    <span class="invalid-msg" th:if="${#fields.hasErrors('player')}" th:errors="*{player}"></span>
+              </div>
+              
+              <div class="form-group">
+              	<label for="to">To:</label>
+                <select class="custom-select" id="to" th:field="*{to}" required>
+			    </select>
+			    <span class="invalid-msg" th:if="${#fields.hasErrors('to')}" th:errors="*{to}"></span>
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary py-3 px-5">
+              </div>
+
+
+            </form>
+          
+          </div>
+
+          <div class="col-md-6 d-flex">
+          	<div id="map" class="bg-white" >
+          	<img style=" height: 97%;width: 100%;"  alt="leagues" th:src="@{/images/leagues.jpg}" >
+          	</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+<th:block th:include="layouts/footer.html"></th:block>
+<script>
+$("#from").change(function(){
+	const from = $( "#from" ).val();
+	$("#from option[value='Choose']").remove();
+	 $('#players').empty();
+	  $('#to').empty();
+	//get Players
+	$.getJSON( "http://localhost:8000/football/api/players/"+from, function( data ) {
+		  var items = [];
+		  $.each( data, function( key, val ) {
+		    //items.push( "<li id='" + val.id + "'>" + val.name + "</li>" );
+			  $('#players')
+		         .append($("<option></option>").attr("value",val.id).text(val.name)); 
+		  });
+		});
+	//get To:
+	$.getJSON( "http://localhost:8000/football/api/clubs", function( data ) {
+		  var items = [];
+		  $.each( data, function( key, val ) {
+		    //items.push( "<li id='" + val.id + "'>" + val.name + "</li>" );
+		    let name = val.name
+		    if(val.id == 5){
+		    	name = "canceled"
+		    }
+		    if(val.id != from){
+		    	$('#to')
+		         .append($("<option></option>").attr("value",val.id).text(name));
+		    }
+		  });
+		});
+	});
+
+</script>
+</html>

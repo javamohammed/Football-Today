@@ -1,0 +1,57 @@
+    <div th:if="${players_club != null}">
+		<a th:href="@{/clubs}" class="btn btn-info">&nbsp;&nbsp;&nbsp;Go Back&nbsp;&nbsp;&nbsp;</a>
+	</div>
+    <div th:unless="${players_club != null}">
+		<a th:href="@{/players/new}" class="btn btn-success">&nbsp;&nbsp;&nbsp;New +&nbsp;&nbsp;&nbsp;</a>
+	</div>
+  
+  
+  
+  <br><br>
+  <!--Table-->
+        <table class="table table-striped">
+
+          <!--Table head-->
+          <!-- `id`, `name`, `country`, `city`, `capaity`, `foundation_date` -->
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name of player</th>
+              <th>Nationality</th>
+              <th>Date of Birthday</th>
+              <th>Position</th>
+              <th>Favorite foot</th>
+              <th>jersey No</th>
+              <th>Age</th>
+              <th>Size</th>
+              <th>Value</th>
+              <th>Club</th>
+             
+            </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+          	<tr th:each="player: ${players}">
+          		<th scope="row" th:text="${player.id}"/>
+          		<td th:text="${player.name}"/>
+          		<td th:text="${player.nationality}"/>
+          		<td th:text="${player.dateOfBir}"/>
+          		<td th:text="${player.position}" />
+          		<td th:text="${player.favoriteFoot}" />
+          		<td th:text="${player.jerseyNo}" />
+          		<td th:text="${player.age}" />
+          		<td th:text="${player.size}" />
+          		<td th:text="${player.value}" />
+          		<td th:text="${player.club.name}" />
+          		
+          		
+          	
+          	</tr>
+          </tbody>
+          <!--Table body-->
+
+
+        </table>
+        <!--Table-->

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<th:block th:include="layouts/section-head.html"></th:block> 
+
+    <section class="ftco-section contact-section">
+      <div class="container">
+			
+		<div  th:replace="games/components/table-standing.html" class="table-responsive text-nowrap"></div>        
+
+      </div>
+    </section>
+		
+  
+<th:block th:include="layouts/footer.html"></th:block>
+
+</html>

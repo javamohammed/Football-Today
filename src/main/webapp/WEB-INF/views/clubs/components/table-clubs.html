@@ -1,0 +1,59 @@
+      <div th:if="${clubs_league != null}">
+		<a th:href="@{/leagues}" class="btn btn-info">&nbsp;&nbsp;&nbsp;Go Back&nbsp;&nbsp;&nbsp;</a>
+		<br><br>
+		<div class="btn-group" role="group" aria-label="Menu">
+		  <a th:href="@{/leagues/matches/}+${leagueId}" class="btn btn-secondary">Matches</a>
+		  <a th:href="@{/leagues/standing/}+${leagueId}" class="btn btn-secondary">Standings</a>
+		</div>
+		<br>
+	</div>
+    <div th:unless="${clubs_league != null}">
+		<a th:href="@{/clubs/new}" class="btn btn-success">&nbsp;&nbsp;&nbsp;New +&nbsp;&nbsp;&nbsp;</a>
+		<br><br>
+	</div>
+  <!--Table-->
+        <table class="table table-striped">
+
+          <!--Table head-->
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Logo</th>
+              <th>Name of club</th>
+              <th>Code</th>
+              <th>Country</th>
+              <th>City</th>
+              <th>Address</th>
+              <th>Foundation Date</th>
+              <th>First Color</th>
+              <th>Second Color</th>
+              <th>Stadium</th>
+            </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+          	<tr th:each="club: ${clubs}">
+          		<th scope="row" th:text="${club.id}"/>
+          		<td>
+          			<img th:src="${club.logo}" class="rounded-circle" alt="logo" width="40px" height="40px"/> 
+          		</td>
+          		<td>
+          			<a th:href="@{/clubs/players/}+${club.id}" class="btn btn-link"><span th:text="${club.name}"/></a>
+          		</td>
+          		<td th:text="${club.code}"/>
+          		<td th:text="${club.country}"/>
+          		<td th:text="${club.city}"/>
+          		<td th:text="${club.address}"/>
+          		<td th:text="${club.foundationDate}"/>
+          		<td th:text="${club.color_1}"/>
+          		<td th:text="${club.color_2}"/>
+          		<td th:text="${club.stadium.name}"/>
+          	</tr>
+          </tbody>
+          <!--Table body-->
+
+
+        </table>
+        <!--Table-->

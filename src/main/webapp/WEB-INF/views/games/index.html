@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<th:block th:include="layouts/section-head.html"></th:block> 
+
+    <section class="ftco-section contact-section">
+      <div class="container">
+        <div class="row block-9">
+          <div class="col-md-6 order-md-last d-flex">
+            <form action="#" class="bg-light p-5 contact-form" th:action="@{/games/save}" th:object="${match}" method="post">
+
+              <div class="form-group">
+                <select class="custom-select" id="country" required>
+                <option value="Choose"  selected>Choose...</option>
+			    <option th:each="countryTmp : ${countries}" 
+					          th:value="${countryTmp.id}" 
+					          th:text="${countryTmp.name}"/>
+			    </select>
+              </div>
+               <div class="form-group">
+	            <select class="custom-select" id="leagues"  th:field="*{league.id}"  >
+			    </select>
+			    <span class="invalid-msg" th:if="${#fields.hasErrors('league')}" th:errors="*{league}"></span>
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Generate Weeks" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+          
+          </div>
+
+          <div class="col-md-6 d-flex">
+          	<div id="map" class="bg-white" >
+          	<div class="form-group">
+                <select class="custom-select" id="league_2" required>
+                <option value="Choose"  selected>Choose League...</option>
+			    <option th:each="league : ${leagues}" 
+					          th:value="${league.id}" 
+					          th:text="${league.name}"/>
+			    </select>
+              </div>
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+				  <li class="nav-item">
+				    <a class="nav-link active" id="Weeks-tab" data-toggle="tab" href="#Weeks" role="tab" aria-controls="Weeks" aria-selected="true">Weeks</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link" id="Results-tab" data-toggle="tab" href="#Results" role="tab" aria-controls="Results" aria-selected="false">Results</a>
+				  </li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+				  <div class="tab-pane fade show active" id="Weeks" role="tabpanel" aria-labelledby="Weeks-tab">
+					  <form action="#" class="bg-light p-5 contact-form sub-form" method="post">
+					  		<div  th:replace="games/components/weeks-set.html" class="table-responsive text-nowrap"></div>
+					  		<div class="form-group">
+		        			        <input type="submit" value="save" class="btn btn-primary">
+				              </div>
+					  </form>
+				  </div>
+				  <div class="tab-pane fade" id="Results" role="tabpanel" aria-labelledby="Results-tab">
+					  <form action="#" class="bg-light p-5 contact-form sub-form"  method="post">
+						<div  th:replace="games/components/results-match.html" class="table-responsive text-nowrap"></div>
+						  <div class="form-group">
+	        			        <input type="submit" value="save" class="btn btn-primary">
+			              </div>
+						</form>
+				 </div>
+				</div>          	
+
+
+
+          	</div>
+          </div>
+        </div>
+      </div>
+    </section>
+		
+  
+<th:block th:include="layouts/footer.html"></th:block>
+
+<script>
+$("#country").change(function(){
+	const country = $( "#country" ).val();
+	$("#country option[value='Choose']").remove();
+	//Get Leagues
+	$.getJSON( "http://localhost:8000/football/api/leagues/"+country, function( data ) {
+		  var items = [];
+		  $('#leagues').empty();
+		  $.each( data, function( key, val ) {
+			 // console.log("--",key,'--',val)
+		    //items.push( "<li id='" + val.id + "'>" + val.name + "</li>" );
+			  $('#leagues')
+		         .append($("<option></option>").attr("value",val.id).text(val.name)); 
+		  });
+		});
+	
+	});
+	
+$("#league_2").change(function(){
+	const league = $( "#league_2" ).val();
+	$("#league_2 option[value='Choose']").remove();
+	//Get Leagues
+	$.getJSON( "http://localhost:8000/football/api/leagues/matches/"+league, function( data ) {
+		  var items = [];
+		  $("#weeks-table > tbody").html("");
+		  $("#results-table > tbody").html("");
+		  $('.sub-form').attr('action', '/football/games/save/r/'+league);
+		  $.each( data, function( key, val ) {
+			 // console.log("--",key,'--',val)
+			 let dayMatch  = val.dayMatch 
+			 if(val.dayMatch == null){
+				 dayMatch = "06/05/2020"
+			 }
+			 let result = val.result
+			 if(val.result == null){
+				 result = "-"
+			 }
+			 $("#weeks-table tbody").append(`<tr>
+			 	<th scope="row">${val.week}</th>
+			 	<td><a href="/football/games/match/${val.id}">${val.local.name} vs ${val.visitor.name}</a></td>
+			 	<td>
+			 	<div class="input-group date" data-provide="datepicker">
+			    <input type="text" class="form-control" name="${val.id}#daymatch" placeholder="Foundtion date"  value="${dayMatch}">
+			    <div class="input-group-addon">
+			        <span class="glyphicon glyphicon-th"></span>
+			    </div>
+				</div>
+			 	</td>
+			 	</tr>`);
+			 $("#results-table tbody").append(`<tr>
+				 	<th scope="row">${val.week}</th>
+				 	<td><a href="/football/games/match/${val.id}">${val.local.name} vs ${val.visitor.name}</a></td>
+				 	<td> <input type="text" class="form-control" name="${val.id}#result"   placeholder="Result" value="${result}"></td>
+			 	</tr>`);
+		    //items.push( "<li id='" + val.id + "'>" + val.name + "</li>" );
+			  //$('#leagues').append($("<option></option>").attr("value",val.id).text(val.name)); 
+		  });
+		});
+	
+	});	
+
+</script>
+
+
+</html>

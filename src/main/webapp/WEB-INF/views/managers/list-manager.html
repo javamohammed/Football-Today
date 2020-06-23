@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<th:block th:include="layouts/section-head.html"></th:block> 
+
+<section class="ftco-section contact-section">
+	<div class="container">
+			  <span sec:authorize="isAuthenticated()">
+                | Logged user: <span sec:authentication="name"></span> |
+                Roles: <span sec:authentication="principal.authorities"></span> |
+                <a th:href="@{/logout}">Sign Out</a>
+            </span>
+		<div  th:replace="managers/components/table-managers.html" class="table-responsive text-nowrap"></div> 
+	</div>
+ </section>
+		
+  
+<th:block th:include="layouts/footer.html"></th:block>
+</html>

@@ -1,0 +1,44 @@
+<!--Table-->
+        <div th:if="${matches_league != null}">
+		<a th:href="@{/leagues}" class="btn btn-info">&nbsp;&nbsp;&nbsp;Go Back&nbsp;&nbsp;&nbsp;</a>
+		<br><br>
+		<div class="btn-group" role="group" aria-label="Menu">
+		  <a th:href="@{/leagues/matches/}+${leagueId}" class="btn btn-secondary">Matches</a>
+		  <a th:href="@{/leagues/standing/}+${leagueId}" class="btn btn-secondary">Standings</a>
+		</div>
+		<br>
+	</div>
+    <div th:unless="${matches_league != null}">
+		<a th:href="@{/clubs/new}" class="btn btn-success">&nbsp;&nbsp;&nbsp;New +&nbsp;&nbsp;&nbsp;</a>
+		<br><br>
+	</div>
+     
+        <table class="table table-striped">
+
+          <!--Table head-->
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Local</th>
+              <th>Visitor</th>
+              <th>Day</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+          	<tr th:each="match: ${matches}">
+          		<th scope="row"><a th:href="@{/games/match/}+${match.id}"><span th:text="${match.week}" /></a></th>
+          		<td th:text="${match.local.name}"/>
+          		<td th:text="${match.visitor.name}"/>
+          		<td th:text="${match.dayMatch}"/>
+          		<td th:text="${match.result}"/>
+          	</tr>
+          </tbody>
+          <!--Table body-->
+
+
+        </table>
+        <!--Table-->

@@ -1,0 +1,35 @@
+  <a th:href="@{/leagues/new}" class="btn btn-success">&nbsp;&nbsp;&nbsp;New +&nbsp;&nbsp;&nbsp;</a>
+  <br><br>
+  <!--Table-->
+        <table class="table table-striped">
+
+          <!--Table head-->
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Logo</th>
+              <th>Name of league</th>
+              <th>Country</th>
+            </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+          	<tr th:each="league: ${leagues}">
+          		<th scope="row" th:text="${league.id}"/>
+          		<td>
+          			<img th:src="${league.logo}" class="rounded-circle" alt="logo" width="40px" height="40px"> 
+          		</td>
+          		<td>
+          			<a th:href="@{/leagues/clubs/}+${league.id}" class="btn btn-link"><span th:text="${league.name}"/></a>
+          		</td>
+          		<td th:text="${league.country}"/>
+          	
+          	</tr>
+          </tbody>
+          <!--Table body-->
+
+
+        </table>
+        <!--Table-->

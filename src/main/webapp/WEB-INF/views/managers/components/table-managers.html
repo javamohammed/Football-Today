@@ -1,0 +1,37 @@
+  <a th:href="@{/managers/new}" class="btn btn-success">&nbsp;&nbsp;&nbsp;New +&nbsp;&nbsp;&nbsp;</a>
+  <br><br>
+  <!--Table-->
+        <table class="table table-striped">
+
+          <!--Table head-->
+          <!-- `id`, `name`, `country`, `city`, `capaity`, `foundation_date` -->
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name of Manager</th>
+              <th>Nationality</th>
+              <th>Date of Birthday</th>
+              <th>Salary</th>
+            </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+          	<tr th:each="manager: ${managers}">
+          		<th scope="row" th:text="${manager.id}"/>
+          		<td>
+          			<a th:href="@{/managers/show/}+${manager.id}" class="btn btn-link"><span th:text="${manager.name}"/></a>
+          		</td>
+          		<td th:text="${manager.nationality}"/>
+          		<td th:text="${manager.dateOfBir}"/>
+          		<td th:id="${manager.id}" class="salary"><span th:text="${manager.salary}"></span></td>
+          		
+          	
+          	</tr>
+          </tbody>
+          <!--Table body-->
+
+
+        </table>
+        <!--Table-->

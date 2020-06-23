@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<div class="hero-wrap hero-wrap-2" th:style="|background-image:url(@{/images/bg_1.jpg});|" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text hero-wrap-2 align-items-center justify-content-start" data-scrollax-parent="true">
+          <div class="col-md-6 mt-5 pt-5 ftco-animate mt-5" data-scrollax=" properties: { translateY: '70%' }">
+            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">FOOTBALL TODAY</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section ftco-no-pt ftco-no-pb">
+    	<div class="container-fluid px-0">
+	    	<div class="row">
+					<div class="col-md-12">
+						<div class="game-wrap-1 ftco-animate">
+							<div class="row p-2 align-items-center">
+								<div class="col-md-6 pb-4 pb-lg-0 col-lg-3">
+									<div class="text text-vs d-flex">
+										<span class="vs">vs</span>
+										<div class="team-logo text-center">
+												<div class="img" th:style="'background:url('+ ${match.local.logo} +');background-size: contain'"></div>
+											<h3><span th:text="${match.local.name}"/></h3>
+										</div>
+										<div class="team-logo text-center">
+											<div class="img" th:style="'background:url('+ ${match.visitor.logo} +');background-size: contain'"></div>
+											<h3><span th:text="${match.visitor.name}"/></h3>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 pb-4 pb-lg-0 col-lg-3">
+									<div class="text">
+										<div class="img"></div>
+										<h3 class="league" th:text="${match.league.name}"/>
+										<span th:text="${match.week}"/>
+									</div>
+								</div>
+								<div class="col-md-6 pb-4 pb-lg-0 col-lg-4">
+									<div class="text">
+										<div id="timer" class="d-flex mb-0">
+										  <div class="time"  th:text="${match.dayMatch}" />
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 pb-4 pb-lg-0 col-lg-2">
+									<div class="text">
+										<p class="mb-0"><a th:href="@{/}" class="btn btn-primary py-3">Other Match</a></p>
+									</div>
+								</div>
+							</div>
+		        </div>
+					</div>
+	    	</div>
+	    </div>
+    </section>
+
+		<section class="ftco-section ftco-game-schedule ftco-no-pt">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 heading-section text-center ftco-animate mb-4">
+          	<span class="subheading">Game Schedule</span>
+          	<h2 class="mb-4">Game Schedule</h2>
+					</div>
+				</div>
+				<div class="row ftco-animate">
+					<div class="col-md-12 carousel-game-schedule owl-carousel" >
+						<div class="item" th:each="game: ${matchs}">
+							<div class="game-sched text-vs text-center">
+								<div class="divider"><p><span th:text="${game.local.stadium.name}"/>- <span th:text="${game.dayMatch}"/></p></div>
+								<div class="d-flex sched-wrap">
+									<span class="vs">vs</span>
+									<div class="team-logo text-center">
+										<div class="img"  th:style="'background:url('+ ${game.local.logo} +');background-size: contain'"></div>
+										<h3><span th:text="${game.local.name}"/></h3>
+									</div>
+									<div class="team-logo text-center">
+										<div class="img"  th:style="'background:url('+ ${game.visitor.logo} +');background-size: contain'"></div>
+										<h3><span th:text="${game.visitor.name}"/></h3>
+									</div>
+								</div>
+							</div>
+	          			</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+          	<span class="subheading">Blog</span>
+            <h2>Recent News</h2>
+          </div>
+        </div>
+        <div class="row d-flex">
+          <div class="col-md-6 col-lg-3 ftco-animate">
+          	<div class="blog-entry justify-content-end">
+              <a href="blog-single.html" class="block-20" style="background-image: url('${pageContext.request.contextPath}/resources/images/image_1.jpg');">
+              </a>
+              <div class="text mt-3 float-right d-block">
+              	<div class="d-flex align-items-center p-2 pr-3 mb-4 topp">
+              		<div class="one">
+              			<span class="day mr-1">29</span>
+              		</div>
+              		<div class="two">
+              			<span class="yr">2019</span>
+              			<span class="mos">May</span>
+              		</div>
+              	</div>
+                <h3 class="heading"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3 ftco-animate">
+          	<div class="blog-entry justify-content-end">
+              <a href="blog-single.html" class="block-20" style="background-image: url('${pageContext.request.contextPath}/resources/images/image_2.jpg');">
+              </a>
+              <div class="text mt-3 float-right d-block">
+              	<div class="d-flex align-items-center p-2 pr-3 mb-4 topp">
+              		<div class="one">
+              			<span class="day mr-1">29</span>
+              		</div>
+              		<div class="two">
+              			<span class="yr">2019</span>
+              			<span class="mos">May</span>
+              		</div>
+              	</div>
+                <h3 class="heading"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3 ftco-animate">
+          	<div class="blog-entry">
+              <a href="blog-single.html" class="block-20" style="background-image: url('${pageContext.request.contextPath}/resources/images/image_3.jpg');">
+              </a>
+              <div class="text mt-3 float-right d-block">
+              	<div class="d-flex align-items-center p-2 mb-4 topp">
+              		<div class="one">
+              			<span class="day mr-1">29</span>
+              		</div>
+              		<div class="two">
+              			<span class="yr">2019</span>
+              			<span class="mos">May</span>
+              		</div>
+              	</div>
+                <h3 class="heading"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3 ftco-animate">
+          	<div class="blog-entry">
+              <a href="blog-single.html" class="block-20" style="background-image: url('${pageContext.request.contextPath}/resources/images/image_4.jpg');">
+              </a>
+              <div class="text mt-3 float-right d-block">
+              	<div class="d-flex align-items-center p-2 pr-3 mb-4 topp">
+              		<div class="one">
+              			<span class="day mr-1">29</span>
+              		</div>
+              		<div class="two">
+              			<span class="yr">2019</span>
+              			<span class="mos">May</span>
+              		</div>
+              	</div>
+                <h3 class="heading"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+<th:block th:include="layouts/footer.html"></th:block>
+
+</html>

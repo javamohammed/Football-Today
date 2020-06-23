@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<th:block th:include="layouts/section-head.html"></th:block> 
+
+    <section class="ftco-section contact-section">
+      <div class="container">
+        <div class="row block-9">
+          <div class="col-md-6 order-md-last d-flex">
+            <form action="#" class="bg-light p-5 contact-form" th:action="@{/managers/save}" th:object="${manager}" method="post">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Manager Name"  th:field="*{name}">
+                <span class="invalid-msg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+              </div>
+              <div class="form-group">
+                <select class="custom-select" id="nationality" th:field="*{nationality}" required>
+                <option value="Choose"  selected>Choose...</option>
+			    <option th:each="countryTmp : ${countries}" 
+					          th:value="${countryTmp.name}" 
+					          th:text="${countryTmp.name}"/>
+			    </select>
+			    <span class="invalid-msg" th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>
+              </div>
+              
+              
+              <div class="form-group">
+                <input type="number" class="form-control" placeholder="Salary" th:field="*{salary}" >
+                <span class="invalid-msg" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></span>
+              </div>
+              
+              <div class="form-group">
+              	<div class="input-group date" data-provide="datepicker">
+				    <input type="text" class="form-control" placeholder="Birthday date"  th:field="*{dateOfBir}">
+				    <div class="input-group-addon">
+				        <span class="glyphicon glyphicon-th"></span>
+				    </div>
+				</div>
+				<span class="invalid-msg" th:if="${#fields.hasErrors('dateOfBir')}" th:errors="*{dateOfBir}"></span>
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+          
+          </div>
+
+          <div class="col-md-6 d-flex">
+          	<div id="map" class="bg-white" >
+          	<img style=" height: 97%;width: 100%;"  alt="manager" th:src="@{/images/manager.png}" >
+          	</div>
+          </div>
+        </div>
+      </div>
+    </section>
+<th:block th:include="layouts/footer.html"></th:block>
+</html>

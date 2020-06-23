@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<th:block th:include="layouts/section-head.html"></th:block> 
+
+    <section class="ftco-section contact-section">
+      <div class="container">
+        <div class="row block-9">
+          <div class="col-md-6 order-md-last d-flex">
+            <form action="#" class="bg-light p-5 contact-form" th:action="@{/players/save}" th:object="${player}" method="post">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="player Name"  th:field="*{name}">
+                <span class="invalid-msg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+              </div>
+              
+              <div class="form-group">
+                 <select class="custom-select" id="position" th:field="*{position}" required>
+			    <option th:each="pp : ${positions}" 
+					          th:value="${pp.shortCut}" 
+					          th:text="${pp.position}"/>
+			    </select>
+                <span class="invalid-msg" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></span>
+              </div>
+              
+              <div class="form-group">
+                <select class="custom-select" id="favoriteFoot" th:field="*{favoriteFoot}" required>
+			    <option th:each="foot : ${foots}" 
+					          th:value="${foot}" 
+					          th:text="${foot}"/>
+			    </select>
+                <span class="invalid-msg" th:if="${#fields.hasErrors('favoriteFoot')}" th:errors="*{favoriteFoot}"></span>
+              </div>
+              
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="player jersey No"  th:field="*{jerseyNo}">
+                <span class="invalid-msg" th:if="${#fields.hasErrors('jerseyNo')}" th:errors="*{jerseyNo}"></span>
+              </div>
+              
+              <div class="form-group">
+                <input type="number" class="form-control" placeholder="player age" min="14"   th:field="*{age}">
+                <span class="invalid-msg" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
+              </div>
+              
+              
+              <div class="form-group">
+                <input type="number" class="form-control" placeholder="player size" min="150"  th:field="*{size}">
+                <span class="invalid-msg" th:if="${#fields.hasErrors('size')}" th:errors="*{size}"></span>
+              </div>
+              
+               <!-- 
+	               	<div class="form-group">
+	                <select class="custom-select" id="clubs" th:field="*{club.id}" >
+				    <option th:each="clubTmp : ${clubs}" 
+						          th:value="${clubTmp.id}" 
+						          th:text="${clubTmp.name}"/>
+				    </select>
+				    <span class="invalid-msg" th:if="${#fields.hasErrors('club')}" th:errors="*{club}"></span>
+	              </div>
+                -->
+               
+              <div class="form-group">
+                <select class="custom-select" id="nationality" th:field="*{nationality}" required>
+                <option value="Choose"  selected>Choose...</option>
+			    <option th:each="countryTmp : ${countries}" 
+					          th:value="${countryTmp.name}" 
+					          th:text="${countryTmp.name}"/>
+			    </select>
+			    <span class="invalid-msg" th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>
+              </div>
+              
+              
+              <div class="form-group">
+                <input type="number" class="form-control" placeholder="value" min="0"  th:field="*{value}" >
+                <span class="invalid-msg" th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
+              </div>
+              
+              <div class="form-group">
+              	<div class="input-group date" data-provide="datepicker">
+				    <input type="text" class="form-control" placeholder="Brithday date"  th:field="*{dateOfBir}">
+				    <div class="input-group-addon">
+				        <span class="glyphicon glyphicon-th"></span>
+				    </div>
+				</div>
+				<span class="invalid-msg" th:if="${#fields.hasErrors('dateOfBir')}" th:errors="*{dateOfBir}"></span>
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+          
+          </div>
+
+          <div class="col-md-6 d-flex">
+          	<div id="map" class="bg-white" >
+          	<img style=" height: 97%;width: 100%;"  alt="leagues" th:src="@{/images/player.jpg}" >
+          	</div>
+          </div>
+        </div>
+      </div>
+    </section>
+<th:block th:include="layouts/footer.html"></th:block>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<th:block th:include="layouts/section-head.html"></th:block> 
+
+    <section class="ftco-section contact-section">
+      <div class="container">
+			
+	    <div th:if="${teamL != null}" class="container">
+	    
+	    <div class="row">
+		    <div class="col-sm">
+		    </div>
+		    <div class="col-sm">
+		      <h3> <span th:text="${match.local.name}+' '+${resultL}+' - '+${resultV} +' '+${match.visitor.name} " /></h3>
+		    </div>
+		    <div class="col-sm">
+		    </div>
+		  </div>
+			    
+			 <div class="row">
+			    <div class="col">
+					<div class="list-group">
+					  <a th:href="@{/clubs/players/}+${match.local.id}" class="list-group-item list-group-item-action active">
+					    <span th:text="${match.local.name}" />
+					  </a>
+					    <div th:each="local: ${teamL}">
+						  	<button type="button" class="list-group-item list-group-item-action"><span th:text="${local}"/></button>
+						  </div>
+					</div>
+				</div>
+			    
+			    <div class="col">
+					<ul class="list-group" th:each="localG: ${teamLG}">
+					  <li class="list-group-item" th:text="${localG}" />
+					</ul>
+					</div>
+			    <div class="col">
+					<ul class="list-group" th:each="visitorG: ${teamVG}">
+					  <li class="list-group-item" th:text="${visitorG}" />
+					</ul>
+				</div>
+			    
+			    
+			    <div class="col">
+						<div class="list-group">
+						 <a th:href="@{/clubs/players/}+${match.visitor.id}" class="list-group-item list-group-item-action active">
+						    <span th:text="${match.visitor.name}" />
+						  </a>
+						  <div th:each="visitor: ${teamV}">
+						  	<button type="button" class="list-group-item list-group-item-action"><span th:text="${visitor}"/></button>
+						  </div>
+						</div>
+				</div>
+			  </div>
+		</div>
+    <div th:unless="${teamL != null}">
+		<div class="card">
+			  <div class="card-header">
+			    Match
+			  </div>
+			  <div class="card-body">
+			    <h5 class="card-title"><span th:text="${match.local.name}"/> vs <span th:text="${match.visitor.name}"/></h5>
+			     <p class="card-text" th:text="${match.dayMatch}"/>
+			    <a  th:href="@{/leagues/matches/}+${match.league.id}"class="btn btn-primary">Go Back</a>
+			  </div>
+			</div>
+	</div>
+
+      </div>
+    </section>
+		
+  
+<th:block th:include="layouts/footer.html"></th:block>
+
+</html>

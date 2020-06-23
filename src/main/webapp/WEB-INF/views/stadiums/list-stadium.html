@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<th:block th:include="layouts/section-head.html"></th:block> 
+
+<section class="ftco-section contact-section">
+	<div class="container">
+		<div  th:replace="stadiums/components/table-stadiums.html" class="table-responsive text-nowrap"></div> 
+	</div>
+ </section>
+		
+  
+<th:block th:include="layouts/footer.html"></th:block>
+
+ <script>
+var stadium = {id:"", old_val:0}
+
+
+
+$(document).on('keypress',function(e) {
+    if(e.which == 13 && stadium.id != "") {
+    	var capacity = ($( "#"+stadium.id +" :input").val()).trim();
+		console.log("#"+stadium.id ,"----",capacity)
+		if (!(capacity == parseInt(capacity, 10))){
+			capacity = stadium.old_val
+		}//Update old
+		console.log("Call api and update  id= ",stadium.id, " capacity= ", capacity )
+		var data = { id: stadium.id, capacity: capacity }
+		var url = "http://localhost:8000/football/api/stadiums"
+			$.ajax({
+			    url: url,
+			    type: 'post',
+			    data: JSON.stringify(data),
+			    headers: {
+			    	'Accept': 'application/json',
+			        'Content-Type': 'application/json' 
+			    },
+			   // dataType: 'json',
+			    success: function (result) {
+			        console.info(result);
+			    }
+			});
+		 $("#"+stadium.id).empty();
+		 $("#"+stadium.id).append("<span>"+capacity+"</span>");
+		 stadium.id = ""
+		stadium.capacity = 0
+		//## End Update
+    }
+});
+
+$(".capacity").dblclick(function(event){
+	
+	if ( $( event.target ).is( "span" ) ) {
+		if(stadium.id == "" ){
+			var capacity = $( this ).first().text();
+			stadium.id = $( this ).attr('id')
+			stadium.old_val =  capacity
+			 $(this).empty();
+			 $(this).append(
+				    $('<input>', {
+				        type: 'text',
+				        val: capacity
+				    })
+				);
+		 		
+		} else if (stadium.id != "") {
+			var capacity = ($( "#"+stadium.id +" :input").val()).trim();
+			console.log("#"+stadium.id ,"----",capacity)
+			if (!(capacity == parseInt(capacity, 10))){
+				capacity = stadium.old_val
+			}//Update old
+			console.log("Call api and update  id= ",stadium.id, " capacity= ", capacity )
+			var data = { id: stadium.id, capacity: capacity }
+			var url = "http://localhost:8000/football/api/stadiums"
+				$.ajax({
+				    url: url,
+				    type: 'post',
+				    data: JSON.stringify(data),
+				    headers: {
+				    	'Accept': 'application/json',
+				        'Content-Type': 'application/json' 
+				    },
+				   // dataType: 'json',
+				    success: function (result) {
+				        console.info(result);
+				    }
+				});
+			 $("#"+stadium.id).empty();
+			 $("#"+stadium.id).append("<span>"+capacity+"</span>");
+			//## End Update
+			capacity = $( this ).first().text();
+			stadium.id = $( this ).attr('id') 
+			stadium.old_val =  capacity
+			 $(this).empty();
+			 $(this).append(
+				    $('<input>', {
+				        type: 'text',
+				        val: capacity
+				    })
+				);
+		}	
+		
+	}
+	
+	 
+	});
+
+</script>
+</html>

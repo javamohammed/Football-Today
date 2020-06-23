@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<th:block th:include="layouts/section-head.html"></th:block> 
+
+    <section class="ftco-section contact-section">
+      <div class="container">
+			
+			<!--Table-->
+       
+		<a th:href="@{/leagues/matches/}+${match.league.id}" class="btn btn-info">&nbsp;&nbsp;&nbsp;Go Back&nbsp;&nbsp;&nbsp;</a>
+		<br><br>
+       	 <form action="#"  th:action="@{|/games/match/save/${match.id}|}" method="post">
+       		 <table class="table table-striped">
+
+          <!--Table head-->
+          <thead>
+            <tr>
+              <th>Team</th>
+              <th>Player</th>
+              <th>Line up</th>
+              <th>Goal</th>
+              <th>Yellow card</th>
+              <th>Read card</th>
+            </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+          	<tr>
+          		<th scope="row" th:text="${match.local.name}"/>
+          		<td></td>
+          		<td></td>
+          		<td></td>
+          		<td></td>
+          		<td></td>
+          	</tr>
+          	<tr th:each="player: ${locals}">
+          		<th scope="row"/>
+          		<td th:text="${player.name}" />
+          		<td><input type="checkbox" th:id="${player.id}+'#'+${player.name}+'#'+${match.local.id}+'#lineup'" th:name="${player.id}+'#'+${player.name}+'#'+${match.local.id}+'#lineup'"  ></td>
+          		<td><input type="checkbox" th:id="${player.id}+'#'+${player.name}+'#'+${match.local.id}+'#goal'" th:name="${player.id}+'#'+${player.name}+'#'+${match.local.id}+'#goal'"  ></td>
+          		<td><input type="checkbox" th:id="${player.id}+'#'+${player.name}+'#'+${match.local.id}+'#yellow'" th:name="${player.id}+'#'+${player.name}+'#'+${match.local.id}+'#yellow'"  ></td>
+          		<td><input type="checkbox" th:id="${player.id}+'#'+${player.name}+'#'+${match.local.id}+'#red'" th:name="${player.id}+'#'+${player.name}+'#'+${match.local.id}+'#red'"  ></td>
+          		
+          	</tr>
+          	
+          	<tr>
+          		<th scope="row" th:text="${match.visitor.name}"/>
+          		<td></td>
+          		<td></td>
+          		<td></td>
+          		<td></td>
+          		<td></td>
+          	</tr>
+          	<tr th:each="player: ${visitors}">
+          		<th scope="row"/>
+				<td th:text="${player.name}" />
+				<td><input type="checkbox" th:id="${player.id}+'#'+${player.name}+'#'+${match.visitor.id}+'#lineup'" th:name="${player.id}+'#'+${player.name}+'#'+${match.visitor.id}+'#lineup'"  ></td>
+				<td><input type="checkbox" th:id="${player.id}+'#'+${player.name}+'#'+${match.visitor.id}+'#goal'" th:name="${player.id}+'#'+${player.name}+'#'+${match.visitor.id}+'#goal'"  ></td>
+				<td><input type="checkbox" th:id="${player.id}+'#'+${player.name}+'#'+${match.visitor.id}+'#yellow'" th:name="${player.id}+'#'+${player.name}+'#'+${match.visitor.id}+'#yellow'"  ></td>
+				<td><input type="checkbox" th:id="${player.id}+'#'+${player.name}+'#'+${match.visitor.id}+'#red'" th:name="${player.id}+'#'+${player.name}+'#'+${match.visitor.id}+'#red'"  ></td>
+				          		
+          	</tr>
+          	
+          	<tr>
+          	</tr>
+          	<tr>
+          		<td></td>
+          		<td></td>
+          		<td><input type="submit" value="save" class="btn btn-primary py-3 px-5"></td>
+          		<td></td>
+          		<td></td>
+          		<td></td>
+          	</tr>
+          </tbody>
+          <!--Table body-->
+
+
+        </table>
+       	</form>
+        <!--Table-->
+			
+			
+			
+			
+      </div>
+    </section>
+		
+  
+<th:block th:include="layouts/footer.html"></th:block>
+
+</html>

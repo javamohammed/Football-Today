@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<th:block th:include="layouts/section-head.html"></th:block> 
+
+ <section class="ftco-section contact-section">
+      <div class="container">
+        <div class="row block-9">
+          <div class="col-md-6 order-md-last d-flex">
+            <form action="#" class="bg-light p-5 contact-form" th:action="@{/clubs/save}" th:object="${club}" method="post">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Club Name"  th:field="*{name}">
+                <span class="invalid-msg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Code Club"  th:field="*{code}">
+                <span class="invalid-msg" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></span>
+              </div>
+              <div class="form-group">
+                <select class="custom-select" id="country" th:field="*{country}" >
+                <option value="Choose"  selected>Choose...</option>
+			    <option th:each="countryTmp : ${countries}" 
+					          th:value="${countryTmp.id}" 
+					          th:text="${countryTmp.name}"/>
+			    </select>
+			    <span class="invalid-msg" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></span>
+              </div>
+              
+              <div class="form-group">
+	            <select class="custom-select" id="states" >
+			    </select>
+              </div>
+              
+               <div class="form-group">
+	            <select class="custom-select" id="cities"  th:field="*{city}"  >
+			    </select>
+              </div>
+              
+              <div class="form-group">
+	            <select class="custom-select" id="stadiums"  th:field="*{stadium.id}"  >
+			    </select>
+			    <span class="invalid-msg" th:if="${#fields.hasErrors('stadium')}" th:errors="*{stadium}"></span>
+              </div>
+              
+              <div class="form-group">
+	            <select class="custom-select" id="leagues"  th:field="*{league.id}"  >
+			    </select>
+			    <span class="invalid-msg" th:if="${#fields.hasErrors('league')}" th:errors="*{league}"></span>
+              </div>
+              
+              <div class="form-group">
+                <textarea  class="form-control" placeholder="Address" th:field="*{address}" rows="3" ></textarea>
+                <span class="invalid-msg" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+              </div>
+              
+              <div class="form-group">
+              	<div class="input-group date" data-provide="datepicker">
+				    <input type="text" class="form-control" placeholder="Foundtion date"  th:field="*{foundationDate}">
+				    <div class="input-group-addon">
+				        <span class="glyphicon glyphicon-th"></span>
+				    </div>
+				</div>
+				<span class="invalid-msg" th:if="${#fields.hasErrors('foundationDate')}" th:errors="*{foundationDate}"></span>
+              </div>
+              
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Link logo" th:field="*{logo}" >
+                <span class="invalid-msg" th:if="${#fields.hasErrors('logo')}" th:errors="*{logo}"></span>
+              </div>
+              
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="first Color" th:field="*{color_1}" >
+                <span class="invalid-msg" th:if="${#fields.hasErrors('color_1')}" th:errors="*{color_1}"></span>
+              </div>
+              
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="second Color" th:field="*{color_2}" >
+                <span class="invalid-msg" th:if="${#fields.hasErrors('color_2')}" th:errors="*{color_2}"></span>
+              </div>
+              
+              <div class="form-group">
+                <select class="custom-select" id="managers" th:field="*{manager.id}" >
+			    <option th:each="managerTmp : ${managers}" 
+					          th:value="${managerTmp.id}" 
+					          th:text="${managerTmp.name}"/>
+			    </select>
+			    <span class="invalid-msg" th:if="${#fields.hasErrors('manager')}" th:errors="*{manager}"></span>
+              </div>
+              
+              
+              
+              <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+          
+          </div>
+
+          <div class="col-md-6 d-flex">
+          	<div id="map" class="bg-white" >
+          	<img style=" height: 97%;width: 100%;"  alt="leagues" th:src="@{/images/clubs.jpg}" >
+          	</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  
+<th:block th:include="layouts/footer.html"></th:block>
+
+<script>
+$("#country").change(function(){
+	const country = $( "#country" ).val();
+	$("#country option[value='Choose']").remove();
+	
+	//Get states
+	$.getJSON( "http://localhost:8000/football/api/states/"+country, function( data ) {
+		  var items = [];
+		  $('#states').empty();
+		  $('#cities').empty();
+		  $.each( data, function( key, val ) {
+		    //items.push( "<li id='" + val.id + "'>" + val.name + "</li>" );
+			  $('#states')
+		         .append($("<option></option>").attr("value",val.id).text(val.name)); 
+		  });
+		});
+	
+	//Get Stadiums
+	$.getJSON( "http://localhost:8000/football/api/stadiums/"+country, function( data ) {
+		  var items = [];
+		  $('#stadiums').empty();
+		  $.each( data, function( key, val ) {
+			 // console.log("--",key,'--',val)
+		    //items.push( "<li id='" + val.id + "'>" + val.name + "</li>" );
+			  $('#stadiums')
+		         .append($("<option></option>").attr("value",val.id).text(val.name)); 
+		  });
+		});
+	
+	//Get Leagues
+	$.getJSON( "http://localhost:8000/football/api/leagues/"+country, function( data ) {
+		  var items = [];
+		  $('#leagues').empty();
+		  $.each( data, function( key, val ) {
+			 // console.log("--",key,'--',val)
+		    //items.push( "<li id='" + val.id + "'>" + val.name + "</li>" );
+			  $('#leagues')
+		         .append($("<option></option>").attr("value",val.id).text(val.name)); 
+		  });
+		});
+	
+	});
+$("#states").change(function(){
+	const state = $( "#states" ).val();
+	$.getJSON( "http://localhost:8000/football/api/cities/"+state, function( data ) {
+		  $('#cities').empty();
+		  $.each( data, function( key, val ) {
+		    //items.push( "<li id='" + val.id + "'>" + val.name + "</li>" );
+			  $('#cities')
+		         .append($("<option></option>").attr("value",val.id).text(val.name)); 
+		  });
+		});
+	
+	});
+</script>
+
+
+</html>

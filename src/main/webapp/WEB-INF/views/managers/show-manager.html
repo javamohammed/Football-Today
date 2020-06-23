@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<th:block th:include="layouts/section-head.html"></th:block> 
+
+    <section class="ftco-section contact-section">
+      <div class="container">
+        <div class="row block-9">
+          <div class="col-md-6 order-md-last d-flex">
+            <form action="#" class="bg-light p-5 contact-form" th:action="@{|/managers/change/club/${manager.id}/${club.id}|}" method="post">
+              <div class="form-group">
+              <label>Change Club:</label>
+                <select class="custom-select" id="club_id" name="club_id"  required>
+			    <option th:each="clubTmp : ${clubs}" 
+					          th:value="${clubTmp.id}" 
+					          th:text="${clubTmp.name}"
+					          th:selected="${club.id == clubTmp.id}"
+					          />
+			    </select>
+              </div>
+              
+            
+              <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+          
+          </div>
+
+          <div class="col-md-6 d-flex">
+          	<div id="map" class="bg-white" >
+          	<div class="card" style="width: 18rem;">
+		  <div class="card-header">
+			    <span th:text="${manager.name}" />
+			  </div>
+			  <ul class="list-group list-group-flush">
+			    <li class="list-group-item">Nationality: <span th:text="${manager.nationality}" /></li>
+			    <li class="list-group-item">Salary: <span th:text="${manager.salary}" /></li>
+			    <li class="list-group-item">Birthday date: <span th:text="${manager.dateOfBir}" /></li>
+			    <li class="list-group-item">Current Club: <span th:text="${club.name}" /></li>
+			  </ul>
+			</div>
+          	</div>
+          </div>
+        </div>
+      </div>
+    </section>
+<th:block th:include="layouts/footer.html"></th:block>
+</html>

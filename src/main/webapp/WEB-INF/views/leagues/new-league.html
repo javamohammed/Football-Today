@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="layouts/header.html"></th:block>
+
+<th:block th:include="layouts/section-head.html"></th:block> 
+
+    <section class="ftco-section contact-section">
+      <div class="container">
+        <div class="row block-9">
+          <div class="col-md-6 order-md-last d-flex">
+            <form action="#" class="bg-light p-5 contact-form" th:action="@{/leagues/save}" th:object="${league}" method="post">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="League Name"  th:field="*{name}">
+                <span class="invalid-msg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+              </div>
+              <div class="form-group">
+                <select class="custom-select" th:field="*{country}" required>
+			    <option th:each="countryTmp : ${countries}" 
+					          th:value="${countryTmp.name}" 
+					          th:text="${countryTmp.name}"/>
+			    </select>
+			    <span class="invalid-msg" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></span>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Link logo" th:field="*{logo}" >
+                <span class="invalid-msg" th:if="${#fields.hasErrors('logo')}" th:errors="*{logo}"></span>
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+          
+          </div>
+
+          <div class="col-md-6 d-flex">
+          	<div id="map" class="bg-white" >
+          	<img style=" height: 97%;width: 100%;"  alt="leagues" th:src="@{/images/leagues.jpg}" >
+          	</div>
+          </div>
+        </div>
+      </div>
+    </section>
+		
+  
+<th:block th:include="layouts/footer.html"></th:block>
+
+</html>
